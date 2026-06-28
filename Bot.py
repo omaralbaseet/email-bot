@@ -8,13 +8,13 @@ TOKEN = "8887237691:AAFzr8qivtOGhcCnSymPay8stJ3TUUGmqx8"
 
 # ─── إيميلاتك مع باسورداتها ────────────────
 EMAIL_ACCOUNTS = {
-    "omaraazz215@gmail.com": "Omar135790Omar@",
+    "sambatest215@hotmail.com": "Asdxcv33@",
     "user2@yourdomain.com": "pass2",
     "user3@yourdomain.com": "pass3",
     # أضف كمان...
 }
 
-IMAP_SERVER = "imap.gmail.com"  # غيّره حسب مزودك
+IMAP_SERVER = "imap.hotmail.com"  # غيّره حسب مزودك
 # ────────────────────────────────────────────
 
 user_selected_email = {}  # {chat_id: email}
