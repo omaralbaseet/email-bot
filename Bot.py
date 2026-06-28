@@ -14,7 +14,7 @@ EMAIL_ACCOUNTS = {
     # أضف كمان...
 }
 
-IMAP_SERVER = "IMAP_SERVER = "outlook.office365.com"  # غيّره حسب مزودك
+IMAP_SERVER = "outlook.office365.com" # غيّره حسب مزودك
 # ────────────────────────────────────────────
 
 user_selected_email = {}  # {chat_id: email}
