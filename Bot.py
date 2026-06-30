@@ -8,13 +8,13 @@ TOKEN = "8887237691:AAFzr8qivtOGhcCnSymPay8stJ3TUUGmqx8"
 
 # ─── إيميلاتك مع باسورداتها ────────────────
 EMAIL_ACCOUNTS = {
-    "sambatest215@hotmail.com": "pmgqyqglgburnent",
+    "stoorree001@sambastore.site": "Omar135790Omar@",
     "user2@yourdomain.com": "pass2",
     "user3@yourdomain.com": "pass3",
     # أضف كمان...
 }
 
-IMAP_SERVER = "outlook.office365.com" # غيّره حسب مزودك
+IMAP_SERVER = "imappro.zoho.com"# غيّره حسب مزودك
 # ────────────────────────────────────────────
 
 user_selected_email = {}  # {chat_id: email}
