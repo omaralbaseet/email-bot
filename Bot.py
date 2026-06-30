@@ -8,7 +8,7 @@ TOKEN = "8887237691:AAFzr8qivtOGhcCnSymPay8stJ3TUUGmqx8"
 
 # ─── إيميلاتك مع باسورداتها ────────────────
 EMAIL_ACCOUNTS = {
-    "stoorree001@sambastore.site": "Omar135790Omar@",
+    "stoorree001@sambastore.site": "Asdxcv33@",
     "user2@yourdomain.com": "pass2",
     "user3@yourdomain.com": "pass3",
     # أضف كمان...
