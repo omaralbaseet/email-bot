@@ -132,19 +132,11 @@ async def get_code(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
     if code:
         await update.message.reply_text(
             f"✅ *الكود الخاص بك:*\n\n"
-            f"🔢 `{code}`\n\n"
-            f"📌 الموضوع: {result['subject']}",
+            f"🔢 `{code}`",
             parse_mode="Markdown"
         )
     else:
-        # لو ما لقى كود واضح، أرسل كامل الرسالة
-        await update.message.reply_text(
-            f"📨 *آخر رسالة:*\n\n"
-            f"👤 من: {result['from']}\n"
-            f"📌 {result['subject']}\n\n"
-            f"{result['body']}",
-            parse_mode="Markdown"
-        )
+        await update.message.reply_text("⚠️ لم يتم العثور على كود، حاول مرة أخرى بعد ثواني")
 
 async def clear(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
     """يمسح الإيميل المحفوظ"""
