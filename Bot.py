@@ -28,7 +28,7 @@ def get_latest_email(email_addr: str):
     try:
         mail = imaplib.IMAP4_SSL(IMAP_SERVER)
         mail.login(email_addr, password)
-        mail.select("inbox")
+        mail.select("Notifications")
 
         # آخر رسالة غير مقروءة
         _, data = mail.search(None, "UNSEEN")
