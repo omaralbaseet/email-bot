@@ -1,10 +1,11 @@
 import imaplib
 import email
 import re
+import os
 from telegram import Update
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes
 
-TOKEN = "8887237691:AAFzr8qivtOGhcCnSymPay8stJ3TUUGmqx8"
+TOKEN = os.environ.get("BOT_TOKEN", "8887237691:AAFzr8qivtOGhcCnSymPay8stJ3TUUGmqx8")
 
 # ─── إيميلاتك مع باسورداتها ────────────────
 EMAIL_ACCOUNTS = {
@@ -14,7 +15,7 @@ EMAIL_ACCOUNTS = {
     # أضف كمان...
 }
 
-IMAP_SERVER = "imappro.zoho.com"# غيّره حسب مزودك
+IMAP_SERVER = "imappro.zoho.com"  # غيّره حسب مزودك
 # ────────────────────────────────────────────
 
 user_selected_email = {}  # {chat_id: email}
@@ -27,11 +28,11 @@ def get_latest_email(email_addr: str):
     try:
         mail = imaplib.IMAP4_SSL(IMAP_SERVER)
         mail.login(email_addr, password)
-        
+
         # ابحث في كل المجلدات
         folders = ['INBOX', 'Notifications', 'Notification', 'All Mail']
         ids = []
-        
+
         for folder in folders:
             try:
                 mail.select(folder)
@@ -41,7 +42,7 @@ def get_latest_email(email_addr: str):
                     break
             except:
                 continue
-        
+
         if not ids:
             mail.select("INBOX")
             _, data = mail.search(None, "ALL")
@@ -69,12 +70,13 @@ def get_latest_email(email_addr: str):
         mail.logout()
         return {"from": sender, "subject": subject, "body": body[:2000]}, None
 
-except Exception as e:
-            return None, f"خطأ: {str(e)}"
+    except Exception as e:
+        return None, f"خطأ: {str(e)}"
 
 def extract_code(text: str):
     codes = re.findall(r'\b\d{4,8}\b', text)
     return codes[0] if codes else None
+
 # ─── أوامر البوت ───────────────────────────
 
 async def start(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
