@@ -20,7 +20,6 @@ IMAP_SERVER = "imappro.zoho.com"# غيّره حسب مزودك
 user_selected_email = {}  # {chat_id: email}
 
 def get_latest_email(email_addr: str):
-    """يدخل على الإيميل ويجيب آخر رسالة"""
     password = EMAIL_ACCOUNTS.get(email_addr)
     if not password:
         return None, "إيميل غير موجود في النظام"
@@ -28,28 +27,36 @@ def get_latest_email(email_addr: str):
     try:
         mail = imaplib.IMAP4_SSL(IMAP_SERVER)
         mail.login(email_addr, password)
-        mail.select("Notifications")
-
-        # آخر رسالة غير مقروءة
-        _, data = mail.search(None, "UNSEEN")
-        ids = data[0].split()
-
+        
+        # ابحث في كل المجلدات
+        folders = ['INBOX', 'Notifications', 'Notification', 'All Mail']
+        ids = []
+        
+        for folder in folders:
+            try:
+                mail.select(folder)
+                _, data = mail.search(None, "UNSEEN")
+                ids = data[0].split()
+                if ids:
+                    break
+            except:
+                continue
+        
         if not ids:
-            # لو ما في غير مقروءة، جيب آخر رسالة عموماً
+            mail.select("INBOX")
             _, data = mail.search(None, "ALL")
             ids = data[0].split()
 
         if not ids:
             mail.logout()
-            return None, "📭 ما في رسايل في الصندوق"
+            return None, "📭 ما في رسايل"
 
-        # آخر رسالة
         _, msg_data = mail.fetch(ids[-1], "(RFC822)")
         msg = email.message_from_bytes(msg_data[0][1])
 
-        sender  = msg["From"]
+        sender = msg["From"]
         subject = msg["Subject"] or "(بدون موضوع)"
-        body    = ""
+        body = ""
 
         if msg.is_multipart():
             for part in msg.walk():
@@ -60,16 +67,10 @@ def get_latest_email(email_addr: str):
             body = msg.get_payload(decode=True).decode(errors="ignore")
 
         mail.logout()
-        return {
-            "from": sender,
-            "subject": subject,
-            "body": body[:2000]
-        }, None
+        return {"from": sender, "subject": subject, "body": body[:2000]}, None
 
     except Exception as e:
         return None, f"خطأ: {str(e)}"
-
-def extract_code(text: str):
     """يستخرج الكود من الرسالة (أرقام 4-8 خانات)"""
     codes = re.findall(r'\b\d{4,8}\b', text)
     return codes[0] if codes else None
