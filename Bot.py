@@ -74,8 +74,13 @@ def get_latest_email(email_addr: str):
         return None, f"خطأ: {str(e)}"
 
 def extract_code(text: str):
-    codes = re.findall(r'\b\d{4,8}\b', text)
-    return codes[0] if codes else None
+    # كود ستيم Guard (حروف كبيرة + أرقام، غالباً 5 محارف) أو كود أرقام عادي
+    codes = re.findall(r'\b[A-Z0-9]{4,8}\b', text)
+    # رجّح الكود اللي فيه حرف ورقم مع بعض (زي M33NF) أو كود أرقام فقط
+    for c in codes:
+        if any(ch.isdigit() for ch in c):
+            return c
+    return None
 
 # ─── أوامر البوت ───────────────────────────
 
