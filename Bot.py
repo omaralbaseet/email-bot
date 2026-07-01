@@ -69,12 +69,12 @@ def get_latest_email(email_addr: str):
         mail.logout()
         return {"from": sender, "subject": subject, "body": body[:2000]}, None
 
-    except Exception as e:
-        return None, f"خطأ: {str(e)}"
-    """يستخرج الكود من الرسالة (أرقام 4-8 خانات)"""
+except Exception as e:
+            return None, f"خطأ: {str(e)}"
+
+def extract_code(text: str):
     codes = re.findall(r'\b\d{4,8}\b', text)
     return codes[0] if codes else None
-
 # ─── أوامر البوت ───────────────────────────
 
 async def start(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
